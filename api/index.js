@@ -27,10 +27,8 @@ const job = cron.schedule(" */10 * * * * *", async () => {
         })
 });
 
-
-setTimeout(() => {
-    job.start();
-}, 20000);
+job.start();
+ 
 
 app.post('/', async (req, res) => {
 
