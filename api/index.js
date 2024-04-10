@@ -14,35 +14,23 @@ const cron = require('node-cron');
 
 
 app.get('/', function (req, res) {
+    res.send(`Welcome to CRON server ${process.env.BOT_TOKEN}`);
+});
 
-    console.log('inget');
-    res.json({
-        BOT_TOKEN: process.env.BOT_TOKEN,
-        CHAT_ID: process.env.CHAT_ID,
-    });
-
-    async function logMessage() {
-        console.log('logMessagelogMessage');
-        let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
-            {
-                chat_id: process.env.CHAT_ID,
-                text: `<b> tôppopo</b> `,
-                parse_mode: 'HTML',
-            })
-
-    }
-
-    cron.schedule('1 * * * * *', () => {
-
-        console.log('inscheduleschedule');
-        logMessage();
-    });
-
+const job = cron.schedule(" */10 * * * * *", async () => {
+    console.log("A cron job that runs every 4 seconds");
+    let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
+        {
+            chat_id: process.env.CHAT_ID,
+            text: `<b> NewData</b> `,
+            parse_mode: 'HTML',
+        })
 });
 
 
-
-
+setTimeout(() => {
+    job.start();
+}, 20000);
 
 app.post('/', async (req, res) => {
 
