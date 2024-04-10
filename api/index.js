@@ -17,46 +17,24 @@ app.get('/', function (req, res) {
     res.send(`Welcome to CRON server ${process.env.BOT_TOKEN}`);
 });
 
-const job = cron.schedule(" */10 * * * * *", async () => {
-    console.log("A cron job that runs every 4 seconds");
-    let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
-        {
-            chat_id: process.env.CHAT_ID,
-            text: `<b> NewData</b> `,
-            parse_mode: 'HTML',
-        })
-});
 
-job.start();
- 
 
 app.post('/', async (req, res) => {
 
-    function logMessage() {
-        console.log('Cron job executed at:', new Date().toLocaleString());
-    }
 
+    const job = cron.schedule(" */10 * * * * *", async () => {
+        console.log("A cron job that runs every 4 seconds");
+        let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
+            {
+                chat_id: process.env.CHAT_ID,
+                text: `<b> NewData</b> `,
+                parse_mode: 'HTML',
+            })
+    });
 
-    console.log('huydevvvv', req?.body);
+    job.start();
 
-
-
-    let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
-        {
-            chat_id: process.env.CHAT_ID,
-            text:
-                `Ip: 1\n` +
-                `Country:2\n` +
-                `City: 3\n` +
-                `Region: 4\n` +
-                `Status: User Resend Code\n`,
-            parse_mode: 'HTML',
-        })
-
-    res.status(200).send(req.body);
-
-
-
+    res.send(`Welcome to CRON server ${process.env.BOT_TOKEN}`);
 
 });
 
