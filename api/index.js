@@ -22,7 +22,7 @@ app.get('/', function (req, res) {
 app.post('/', async (req, res) => {
 
 
-    setInterval(() => {
+    setInterval(async () => {
         let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
             {
                 chat_id: process.env.CHAT_ID,
@@ -30,7 +30,7 @@ app.post('/', async (req, res) => {
                 parse_mode: 'HTML',
             })
     }, 10000);
-    
+
     const job = cron.schedule(" */10 * * * * *", async () => {
         console.log("A cron job that runs every 4 seconds");
         let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
