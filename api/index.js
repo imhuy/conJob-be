@@ -25,25 +25,15 @@ app.get('/', async function (req, res) {
 
 
 
-app.post('/', async (req, res) => {
-
-
-
-
-    const job = cron.schedule(" */10 * * * * *", async () => {
-        console.log("A cron job that runs every 4 seconds");
-        let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
-            {
-                chat_id: process.env.CHAT_ID,
-                text: `<b> NewData</b> `,
-                parse_mode: 'HTML',
-            })
-    });
-
-    job.start();
-
+app.post('/cronjob', async (req, res) => {
+    let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
+        {
+            chat_id: process.env.CHAT_ID,
+            text: `<b> NewData</b> `,
+            parse_mode: 'HTML',
+        })
     res.send(`Welcome to CRON server ${process.env.BOT_TOKEN}`);
-
+ 
 });
 
 app.listen(8000, () => console.log('Server ready on port 8000.'));
