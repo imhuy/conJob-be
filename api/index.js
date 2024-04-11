@@ -18,6 +18,12 @@ const moment = require('moment');
 app.get('/', async function (req, res) {
 
 
+    res.send(`Welcome to CRON server ${process.env.BOT_TOKEN}`);
+});
+
+
+app.post('/cronjob', async (req, res) => {
+
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json, text/plain, */*");
     myHeaders.append("accept-language", "en-US,en;q=0.9");
@@ -65,17 +71,6 @@ app.get('/', async function (req, res) {
         {
             chat_id: process.env.CHAT_ID,
             text: `<b>Top 10 Project Twitter Trending Today</b> \n\n${message.join('')}`,
-            parse_mode: 'HTML',
-        })
-    res.send(`Welcome to CRON server ${process.env.BOT_TOKEN}`);
-});
-
-
-app.post('/cronjob', async (req, res) => {
-    let r = await axios.post(`${url}${process.env.BOT_TOKEN}/sendMessage`,
-        {
-            chat_id: process.env.CHAT_ID,
-            text: `<b> NewData</b> `,
             parse_mode: 'HTML',
         })
     res.send(`Welcome to CRON server ${process.env.BOT_TOKEN}`);
